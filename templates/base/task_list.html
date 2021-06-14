@@ -2,12 +2,20 @@
 
 {% block content %}
 
-{% if request.user.is_authenticated %}
-   <p>{{request.user}}</p>
-   <a href="{% url 'logout' %}">Logout</a>
-{% else %}
-   <a href="{% url 'login' %}">LogIn</a>
-{% endif %}
+<div class="header-bar">
+    <div>
+        <h1>Hello {{request.user|title}}</h1>
+        <h3>You have <span>{{count}}</span> incomplete task{{count|pluralize}}!</h3>
+    </div>
+    {% if request.user.is_authenticated %}
+    <p>{{request.user}}</p>
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'login' %}">LogIn</a>
+    {% endif %}
+</div>
+
+
 <hr>
 <h1>My To Do List{{color}}</h1>
 <a href="{% url 'create' %}">Add Tasks</a>
@@ -17,7 +25,7 @@
     <input type="text" name="search-area" placeholder="Enter your search word" value="{{search_input}}">
     <input type="submit" value="Search">
 </form>
-<table style="padding:20px;border:2px solid black">
+<table>
     <tr>
         <th>Item</th>
         <th></th>
@@ -29,7 +37,7 @@
         <td><a href="{% url 'delete' task.id %}">Delete</a></td>
     </tr>
     {% empty %}
-    <h3>No itens in list</h3>
+    <h3>No items in list</h3>
     {% endfor %}
 </table>
 
